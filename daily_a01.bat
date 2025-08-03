@@ -28,7 +28,7 @@ IF NOT "%param%"=="" (
   ECHO skipscrubold = Skips scrubbing oldest data.
   ECHO skipservices = Skips restarting services.
   ECHO Press any key to exit . . .
-  PAUSE >null
+  PAUSE >nul
   EXIT /b
  )
 )
@@ -78,7 +78,7 @@ SET rtimestamp=%rtimestamp: =0%
 ECHO Can not run task because SnapRAID for %friendlyname% is running. > "%srpath%\%friendlyname%\dailylog\%rtimestamp%_sync-%shortname%.txt" 2>&1
 %emailstring% -sub "SnapRAID Already Running for %friendlyname%" -M "Can not run task because SnapRAID for %friendlyname% is running. Check the server to continue or halt sync."
 ECHO Close the window to stop, press any key to continue . . .
-PAUSE >null
+PAUSE >nul
 
 
 :SetRunning
@@ -131,7 +131,7 @@ IF %intrem% GTR %delthresh% (
 %emailstring% -sub "SnapRAID not running for %friendlyname%: %intrem% files removed." -M "%dtimestamp%. %intrem% removed. %intadd% added." -M "Services not restarted!" -M "If removed files were expected then check the server for the console waiting to resume or run ""daily_%shortname%.bat skipdel""." -attach "%srpath%\%friendlyname%\dailylog\%dtimestamp%_diff-%shortname%.txt",a
 ECHO SnapRAID did not sync, %intrem% removed, threshold set to %delthresh%. %intadd% added.
 ECHO Close the window to stop, press any key to continue . . .
-PAUSE >null
+PAUSE >nul
 )
 
 :RunTouch
@@ -383,5 +383,5 @@ SET diffstring=(REM:%intrem%)(ADD:%intadd%)
 
 :End
 
-IF %debug%==true ( ECHO. & ECHO. & ECHO Paused due to Debug being enabled & ECHO Press any key to exit & PAUSE >null )
+IF %debug%==true ( ECHO. & ECHO. & ECHO Paused due to Debug being enabled & ECHO Press any key to exit & PAUSE >nul )
 EXIT /B 0
