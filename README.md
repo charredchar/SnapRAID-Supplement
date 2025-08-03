@@ -5,6 +5,7 @@ Configs and Batches used for my Windows SnapRAID setup.
 A stand-alone Windows batch file to be run daily in order to keep Data synced and checked with an emailed report when complete.
 
 
+# License
 Shield: [![CC BY-NC 4.0][cc-by-nc-shield]][cc-by-nc]
 
 This work is licensed under a
