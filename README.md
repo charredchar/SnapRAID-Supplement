@@ -1,5 +1,5 @@
 # SnapRAID
-Configs and Batches used for my Windows SnapRAID setup.
+Supplemental files used for my Windows SnapRAID setup.
 The original script was from [Quaraxkad](https://sourceforge.net/u/quaraxkad/profile/) on a [SnapRAID SourceForge Discussion](https://sourceforge.net/p/snapraid/discussion/1677233/thread/c7ec47b8/#575f) which I have modified as needed.
 
 # Required
