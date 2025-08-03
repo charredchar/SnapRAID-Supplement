@@ -87,11 +87,11 @@ ECHO RunCheck file set to TRUE
 
 :StopServices
 (ECHO. & ECHO. & ECHO [7mStopping Services...[0m & ECHO.)
-sc \\webservices stop Radarr
-sc \\webservices stop Sonarr
-sc \\webservices stop Readarr
-sc \\webservices stop Lidarr
-sc \\webservices stop Bazarr
+sc \\HOSTNAME stop Radarr
+sc \\HOSTNAME stop Sonarr
+sc \\HOSTNAME stop Readarr
+sc \\HOSTNAME stop Lidarr
+sc \\HOSTNAME stop Bazarr
 
 
 :RunDiff
@@ -338,37 +338,37 @@ GOTO EmailResults
 IF %finishstatus%==GOOD (
 (ECHO. & ECHO. & ECHO [7mStarting Services...[0m & ECHO.)
 ECHO Radarr:
-sc \\webservices start Radarr | findstr /c:"STATE"
+sc \\HOSTNAME start Radarr | findstr /c:"STATE"
 TIMEOUT /T 2 > nul
 ECHO Sonarr:
-sc \\webservices start Sonarr | findstr /c:"STATE"
+sc \\HOSTNAME start Sonarr | findstr /c:"STATE"
 TIMEOUT /T 2 > nul
 ECHO Readarr:
-sc \\webservices start Readarr | findstr /c:"STATE"
+sc \\HOSTNAME start Readarr | findstr /c:"STATE"
 TIMEOUT /T 2 > nul
 ECHO Lidarr:
-sc \\webservices start Lidarr | findstr /c:"STATE"
+sc \\HOSTNAME start Lidarr | findstr /c:"STATE"
 TIMEOUT /T 2 > nul
 ECHO Bazarr:
-sc \\webservices start Bazarr | findstr /c:"STATE"
+sc \\HOSTNAME start Bazarr | findstr /c:"STATE"
 
 (ECHO. & ECHO. & ECHO Waiting for Services to start. & ECHO.)
 TIMEOUT /T 10
 (ECHO. & ECHO. & ECHO Checking Services. & ECHO.)
 ECHO Radarr:
-sc \\webservices query Radarr | findstr /c:"STATE"
+sc \\HOSTNAME query Radarr | findstr /c:"STATE"
 TIMEOUT /T 2 > nul
 ECHO Sonarr:
-sc \\webservices query Sonarr | findstr /c:"STATE"
+sc \\HOSTNAME query Sonarr | findstr /c:"STATE"
 TIMEOUT /T 2 > nul
 ECHO Readarr:
-sc \\webservices query Readarr | findstr /c:"STATE"
+sc \\HOSTNAME query Readarr | findstr /c:"STATE"
 TIMEOUT /T 2 > nul
 ECHO Lidarr:
-sc \\webservices query Lidarr | findstr /c:"STATE"
+sc \\HOSTNAME query Lidarr | findstr /c:"STATE"
 TIMEOUT /T 2 > nul
 ECHO Bazarr:
-sc \\webservices query Bazarr | findstr /c:"STATE"
+sc \\HOSTNAME query Bazarr | findstr /c:"STATE"
 SET servicesrestart=1
 )
 
