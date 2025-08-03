@@ -15,7 +15,7 @@ IF NOT "%param%"=="" (
  ) ELSE IF "%param%"=="skipscrubnew" (
   ECHO Skipping Scrub New Routine...
  ) ELSE IF "%param%"=="skipscrubold" (
-  ECHO Skipping Scrub Oldest 1%% Routine...
+  ECHO Skipping Scrub Oldest Routine...
  ) ELSE IF "%param%"=="skipservices" (
   ECHO Skipping Restarting Services...
  ) ELSE (
@@ -25,7 +25,7 @@ IF NOT "%param%"=="" (
   ECHO skipdiff = Skips diff check ^(and delete threshold^).
   ECHO skipscrub = Skips scrub routine^(s^).
   ECHO skipscrubnew = Skips scrubbing new data.
-  ECHO skipscrubold = Skips scrubbing oldest 1%% data.
+  ECHO skipscrubold = Skips scrubbing oldest data.
   ECHO skipservices = Skips restarting services.
   ECHO Press any key to exit . . .
   PAUSE >null
@@ -51,7 +51,9 @@ SET shortname=a01
 SET config=array01.conf
 SET delthresh=1000
 SET iocache=128
-SET debug=true
+SET scruboldpercent=1
+SET scrubolderthan=90
+SET debug=false
 
 
 :Setup
@@ -215,7 +217,7 @@ SET scrubnresult=1
 
 :RunScrubOld
 IF "%param%"=="skipscrubold" (
-(ECHO. & ECHO. & ECHO [7mSkipping Scrub of Oldest 1%% on %friendlyname%.[0m & ECHO.)
+(ECHO. & ECHO. & ECHO [7mSkipping Scrub of Oldest %scruboldpercent%%% on %friendlyname%.[0m & ECHO.)
 SET sotimestamp=%date%_%time::=;%
 SET sotimestamp=%sotimestamp: =0%
 ECHO Scrub Skipped > "%srpath%\%friendlyname%\dailylog\%sotimestamp%_scrubold-%shortname%.txt" 2>&1
@@ -223,10 +225,10 @@ SET scruboresult=0
 ECHO skipscrubold was called, proceeding to Status
 GOTO RunStatus
 )
-(ECHO. & ECHO. & ECHO [7mRunning Scrub of Oldest 1%% on %friendlyname%.[0m & ECHO.)
+(ECHO. & ECHO. & ECHO [7mRunning Scrub of Oldest %scruboldpercent%%% on %friendlyname%.[0m & ECHO.)
 SET sotimestamp=%date%_%time::=;%
 SET sotimestamp=%sotimestamp: =0%
-"%srpath%\snapraid" -c "%srpath%\%config%" scrub -p 1 -o 90 -v --test-io-cache=%iocache% 2>&1 | "%srpath%\tee" -i "%srpath%\%friendlyname%\dailylog\%sotimestamp%_scrubold-%shortname%.txt" 2>&1
+"%srpath%\snapraid" -c "%srpath%\%config%" scrub -p %scruboldpercent% -o %scrubolderthan% -v --test-io-cache=%iocache% 2>&1 | "%srpath%\tee" -i "%srpath%\%friendlyname%\dailylog\%sotimestamp%_scrubold-%shortname%.txt" 2>&1
 SET scruboresult=%ERRORLEVEL%
 IF %debug%==true ( ECHO Error Level for Scrub Old is %ERRORLEVEL% )
 findstr /L /C:"Unexpected Windows error" "%srpath%\%friendlyname%\dailylog\%sotimestamp%_scrubold-%shortname%.txt"
